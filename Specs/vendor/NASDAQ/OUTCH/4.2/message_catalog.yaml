@@ -1,0 +1,108 @@
+protocol: "nasdaq-ouch"
+version: "4.2"
+spec_title: "O*U*C*H Version 4.2"
+source_pdf: "../source/ouch_4_2.pdf"
+
+catalog_style: "vendor"
+message_families:
+  - "inbound"
+  - "outbound_sequenced"
+
+messages:
+  inbound:
+    - section: "2.1"
+      name: "Enter Order Message"
+      type_code: "O"
+      direction: "client_to_exchange"
+      file: "enter_order.yaml"
+
+    - section: "2.2"
+      name: "Replace Order Message"
+      type_code: "U"
+      direction: "client_to_exchange"
+      file: "replace_order.yaml"
+
+    - section: "2.3"
+      name: "Cancel Order Message"
+      type_code: "X"
+      direction: "client_to_exchange"
+      file: "cancel_order.yaml"
+
+    - section: "2.4"
+      name: "Modify Order Message"
+      type_code: "M"
+      direction: "client_to_exchange"
+      file: "modify_order.yaml"
+
+  outbound_sequenced:
+    - section: "3.1"
+      name: "System Event Message"
+      type_code: "S"
+      direction: "exchange_to_client"
+      file: "system_event.yaml"
+
+    - section: "3.3"
+      name: "Accepted Message"
+      type_code: "A"
+      direction: "exchange_to_client"
+      file: "accepted.yaml"
+
+    - section: "3.4"
+      name: "Replaced Message"
+      type_code: "U"
+      direction: "exchange_to_client"
+      file: "replaced.yaml"
+
+    - section: "3.5"
+      name: "Canceled Message"
+      type_code: "C"
+      direction: "exchange_to_client"
+      file: "canceled.yaml"
+
+    - section: "3.6"
+      name: "AIQ Cancelled Message"
+      type_code: "D"
+      direction: "exchange_to_client"
+      file: "aiq_cancelled.yaml"
+
+    - section: "3.7"
+      name: "Executed Message"
+      type_code: "E"
+      direction: "exchange_to_client"
+      file: "executed.yaml"
+
+    - section: "3.8"
+      name: "Broken Trade Message"
+      type_code: "B"
+      direction: "exchange_to_client"
+      file: "broken_trade.yaml"
+
+    - section: "3.9"
+      name: "Rejected Message"
+      type_code: "J"
+      direction: "exchange_to_client"
+      file: "rejected.yaml"
+
+    - section: "3.11"
+      name: "Cancel Pending Message"
+      type_code: "P"
+      direction: "exchange_to_client"
+      file: "cancel_pending.yaml"
+
+    - section: "3.12"
+      name: "Cancel Reject Message"
+      type_code: "I"
+      direction: "exchange_to_client"
+      file: "cancel_reject.yaml"
+
+    - section: "3.13"
+      name: "Order Priority Update Message"
+      type_code: "T"
+      direction: "exchange_to_client"
+      file: "order_priority_update.yaml"
+
+    - section: "3.14"
+      name: "Order Modified Message"
+      type_code: "M"
+      direction: "exchange_to_client"
+      file: "order_modified.yaml"
