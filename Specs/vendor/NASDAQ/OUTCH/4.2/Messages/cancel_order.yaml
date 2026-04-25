@@ -1,0 +1,40 @@
+protocol: "nasdaq-ouch"
+version: "4.2"
+spec_title: "O*U*C*H Version 4.2"
+source_pdf: "../source/ouch_4_2.pdf"
+source_section: "2.3"
+catalog_style: "vendor"
+
+message:
+  name: "Cancel Order Message"
+  type_code: "X"
+  direction: "client_to_exchange"
+  summary: "Request that an order be canceled or reduced."
+
+  fields:
+    - name: "Type"
+      offset: 0
+      length: 1
+      wire_type: "alpha"
+      fixed_value: "X"
+
+    - name: "Order Token"
+      offset: 1
+      length: 14
+      wire_type: "token"
+      notes:
+        - "The Order Token as originally transmitted in an Enter Order Message."
+
+    - name: "Shares"
+      offset: 15
+      length: 4
+      wire_type: "integer"
+      notes:
+        - "New intended order size."
+        - "Limits the maximum number of shares that can potentially be executed in total after the cancel is applied."
+        - "Entering zero cancels any remaining open shares on the order."
+
+  behavior_notes:
+    - "The only acknowledgement is the resulting Canceled Order Message."
+    - "There is no too-late-to-cancel message."
+    - "Superfluous Cancel Order Messages are silently ignored."

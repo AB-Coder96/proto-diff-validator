@@ -1,0 +1,109 @@
+protocol: "nasdaq-ouch"
+version: "4.2"
+spec_title: "O*U*C*H Version 4.2"
+source_pdf: "../source/ouch_4_2.pdf"
+source_section: "2.2"
+catalog_style: "vendor"
+
+message:
+  name: "Replace Order Message"
+  type_code: "U"
+  direction: "client_to_exchange"
+  summary: "Cancel and replace an existing order in a single message."
+
+  fields:
+    - name: "Type"
+      offset: 0
+      length: 1
+      wire_type: "alpha"
+      fixed_value: "U"
+
+    - name: "Existing Order Token"
+      offset: 1
+      length: 14
+      wire_type: "token"
+      notes:
+        - "Token from the original Enter Order or last Replace Order."
+
+    - name: "Replacement Order Token"
+      offset: 15
+      length: 14
+      wire_type: "token"
+      notes:
+        - "Must be day-unique for the OUCH account."
+
+    - name: "Shares"
+      offset: 29
+      length: 4
+      wire_type: "integer"
+      notes:
+        - "Total liable shares for the whole chain, including prior executions and SMP decrements."
+        - "Must be > 0 and < 1,000,000."
+
+    - name: "Price"
+      offset: 33
+      length: 4
+      wire_type: "integer"
+      notes:
+        - "Replacement order price."
+
+    - name: "Time in Force"
+      offset: 37
+      length: 4
+      wire_type: "integer"
+      notes:
+        - "Lifetime in seconds."
+        - "Special values are defined in the spec data-types section."
+
+    - name: "Display"
+      offset: 41
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "A"
+          meaning: "Attributable - Price to Display"
+        - value: "Y"
+          meaning: "Anonymous - Price to Comply"
+        - value: "N"
+          meaning: "Non-Display"
+        - value: "P"
+          meaning: "Post-Only"
+        - value: "I"
+          meaning: "Imbalance-Only"
+        - value: "M"
+          meaning: "Mid-Point Peg"
+        - value: "W"
+          meaning: "Mid-Point Peg Post Only"
+        - value: "L"
+          meaning: "Post-Only and Attributable - Price to Display"
+        - value: "O"
+          meaning: "Retail Order Type 1"
+        - value: "T"
+          meaning: "Retail Order Type 2"
+        - value: "Q"
+          meaning: "Retail Price Improvement Order"
+        - value: "m"
+          meaning: "Mid-Point Peg and Mid-Point Trade Now"
+        - value: "n"
+          meaning: "Non-Display and Mid-Point Trade Now"
+        - value: "B"
+          meaning: "M-ELO and Continuous Book Midpoint"
+
+    - name: "Intermarket Sweep Eligibility"
+      offset: 42
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "Y"
+          meaning: "eligible"
+        - value: "N"
+          meaning: "not eligible"
+        - value: "y"
+          meaning: "Trade-at Intermarket Sweep Order"
+
+    - name: "Minimum Quantity"
+      offset: 43
+      length: 4
+      wire_type: "integer"
+      notes:
+        - "Minimum acceptable quantity to execute."

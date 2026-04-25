@@ -1,0 +1,50 @@
+protocol: "nasdaq-ouch"
+version: "4.2"
+spec_title: "O*U*C*H Version 4.2"
+source_pdf: "../source/ouch_4_2.pdf"
+source_section: "2.4"
+catalog_style: "vendor"
+
+message:
+  name: "Modify Order Message"
+  type_code: "M"
+  direction: "client_to_exchange"
+  summary: "Request modifications that generally preserve order priority unless shares are increased."
+
+  fields:
+    - name: "Type"
+      offset: 0
+      length: 1
+      wire_type: "alpha"
+      fixed_value: "M"
+
+    - name: "Order Token"
+      offset: 1
+      length: 14
+      wire_type: "token"
+      notes:
+        - "The Order Token as originally transmitted in an Enter Order Message."
+
+    - name: "Buy/Sell Indicator"
+      offset: 15
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "B"
+          meaning: "buy"
+        - value: "S"
+          meaning: "sell"
+        - value: "T"
+          meaning: "sell short"
+        - value: "E"
+          meaning: "sell short exempt"
+      notes:
+        - "Only the following transitions are allowed: S->T, S->E, E->T, E->S, T->E, T->S."
+
+    - name: "Shares"
+      offset: 16
+      length: 4
+      wire_type: "integer"
+      notes:
+        - "Total liable shares, inclusive of previous executions and Self Match Prevention decremented shares on the order chain."
+        - "Must be greater than zero and less than 1,000,000."

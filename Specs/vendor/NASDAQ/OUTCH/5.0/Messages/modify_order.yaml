@@ -1,0 +1,72 @@
+protocol: "nasdaq-ouch"
+version: "5.0"
+spec_title: "OUCH 5.0 Order Entry Specification"
+source_pdf: "../source/ouch_5_0.pdf"
+source_section: "2.4"
+catalog_style: "vendor"
+
+message:
+  name: "Modify Order Request"
+  type_code: "M"
+  direction: "client_to_exchange"
+  summary: "Request modifications that do not affect order priority on the book; increasing share amount is not allowed."
+
+  fields:
+    - name: "Type"
+      offset: 0
+      length: 1
+      wire_type: "alpha"
+      fixed_value: "M"
+
+    - name: "UserRefNum"
+      offset: 1
+      length: 4
+      wire_type: "user_ref_num"
+      notes:
+        - "The Order UserRefNum as originally transmitted in an Enter Order Message."
+
+    - name: "Side"
+      offset: 5
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "B"
+          meaning: "buy"
+        - value: "S"
+          meaning: "sell"
+        - value: "T"
+          meaning: "sell short"
+        - value: "E"
+          meaning: "sell short exempt"
+      notes:
+        - "The new side to be associated with the order."
+        - "Only the following modifications are allowed: S->E, S->T, E->T."
+
+    - name: "Quantity"
+      offset: 6
+      length: 4
+      wire_type: "integer"
+      notes:
+        - "The new intended order size."
+        - "Entering zero cancels any remaining open shares on the order."
+        - "Increasing share amount is not allowed and requests to do so are ignored."
+
+    - name: "Appendage Length"
+      offset: 10
+      length: 2
+      wire_type: "integer"
+      required: false
+      notes:
+        - "Length of the remaining Optional Appendage field."
+
+    - name: "Optional Appendage"
+      offset: 12
+      length: "var"
+      wire_type: "tag_value"
+      required: false
+      appendage_options:
+        - "UserRefIdx"
+        - "SharesLocated"
+        - "LocateBroker"
+      notes:
+        - "Appendage Length and Optional Appendage are optional on this message type."

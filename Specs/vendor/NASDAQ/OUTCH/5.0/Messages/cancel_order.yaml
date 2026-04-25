@@ -1,0 +1,59 @@
+protocol: "nasdaq-ouch"
+version: "5.0"
+spec_title: "OUCH 5.0 Order Entry Specification"
+source_pdf: "../source/ouch_5_0.pdf"
+source_section: "2.3"
+catalog_style: "vendor"
+
+message:
+  name: "Cancel Order Request"
+  type_code: "X"
+  direction: "client_to_exchange"
+  summary: "Request that an order be canceled or reduced."
+
+  fields:
+    - name: "Type"
+      offset: 0
+      length: 1
+      wire_type: "alpha"
+      fixed_value: "X"
+
+    - name: "UserRefNum"
+      offset: 1
+      length: 4
+      wire_type: "user_ref_num"
+      notes:
+        - "The Order UserRefNum as originally transmitted in an Enter Order Message."
+
+    - name: "Quantity"
+      offset: 5
+      length: 4
+      wire_type: "integer"
+      notes:
+        - "New intended order size."
+        - "Limits the maximum number of shares that can potentially be executed in total after the cancel is applied."
+        - "Entering zero cancels any remaining open shares on the order."
+
+    - name: "Appendage Length"
+      offset: 9
+      length: 2
+      wire_type: "integer"
+      required: false
+      notes:
+        - "Length of the remaining Optional Appendage field."
+
+    - name: "Optional Appendage"
+      offset: 11
+      length: "var"
+      wire_type: "tag_value"
+      required: false
+      appendage_options:
+        - "UserRefIdx"
+      notes:
+        - "Appendage Length and Optional Appendage are optional on this message type."
+
+  behavior_notes:
+    - "To cancel the entire balance of an order, send Quantity = 0."
+    - "The only acknowledgement is the resulting Canceled Order Message."
+    - "There is no too-late-to-cancel message."
+    - "Superfluous Cancel Order Messages are silently ignored."

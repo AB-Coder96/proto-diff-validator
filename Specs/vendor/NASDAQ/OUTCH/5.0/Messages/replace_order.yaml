@@ -1,0 +1,123 @@
+protocol: "nasdaq-ouch"
+version: "5.0"
+spec_title: "OUCH 5.0 Order Entry Specification"
+source_pdf: "../source/ouch_5_0.pdf"
+source_section: "2.2"
+catalog_style: "vendor"
+
+message:
+  name: "Replace Order Request"
+  type_code: "U"
+  direction: "client_to_exchange"
+  summary: "Cancel and replace an existing order in a single message."
+
+  fields:
+    - name: "Type"
+      offset: 0
+      length: 1
+      wire_type: "alpha"
+      fixed_value: "U"
+
+    - name: "OrigUserRefNum"
+      offset: 1
+      length: 4
+      wire_type: "user_ref_num"
+      notes:
+        - "UserRefNum from the original Enter Order or last Replace Order."
+
+    - name: "UserRefNum"
+      offset: 5
+      length: 4
+      wire_type: "user_ref_num"
+      notes:
+        - "Replacement UserRefNum must be unique and strictly increasing for the OUCH account."
+
+    - name: "Quantity"
+      offset: 9
+      length: 4
+      wire_type: "integer"
+      notes:
+        - "Total liable shares for the whole chain, including prior executions and SMP decrements."
+        - "Must be > 0 and < 1,000,000."
+
+    - name: "Price"
+      offset: 13
+      length: 8
+      wire_type: "price"
+      notes:
+        - "Replacement order price."
+
+    - name: "Time In Force"
+      offset: 21
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "0"
+          meaning: "Day (Market Hours)"
+        - value: "3"
+          meaning: "IOC"
+        - value: "5"
+          meaning: "GTX (Extended Hours)"
+        - value: "6"
+          meaning: "GTT"
+
+    - name: "Display"
+      offset: 22
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "Y"
+          meaning: "visible"
+        - value: "N"
+          meaning: "hidden"
+        - value: "A"
+          meaning: "attributable"
+
+    - name: "InterMarket Sweep Eligibility"
+      offset: 23
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "Y"
+          meaning: "eligible"
+        - value: "N"
+          meaning: "not eligible"
+
+    - name: "ClOrdID"
+      offset: 24
+      length: 14
+      wire_type: "alpha"
+      notes:
+        - "Customer order identifier for the replacement order."
+
+    - name: "Appendage Length"
+      offset: 38
+      length: 2
+      wire_type: "integer"
+      notes:
+        - "Length of the remaining Optional Appendage field."
+
+    - name: "Optional Appendage"
+      offset: 40
+      length: "var"
+      wire_type: "tag_value"
+      notes:
+        - "Firm and GroupID are inherited from the original order."
+        - "If UserRefIdx was used on the original order, it must also be present and match here."
+      appendage_options:
+        - "MinQty"
+        - "MaxFloor"
+        - "PriceType"
+        - "PostOnly"
+        - "ExpireTime"
+        - "TradeNow"
+        - "HandleInst"
+        - "RandomReserves"
+        - "PegOffset"
+        - "DiscretionPrice"
+        - "DiscretionPriceType"
+        - "DiscretionPegOffset"
+        - "SharesLocated"
+        - "LocateBroker"
+        - "UserRefIdx"
+        - "Side"
