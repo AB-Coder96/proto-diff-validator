@@ -1,0 +1,66 @@
+protocol: "nasdaq-ouch"
+version: "5.0"
+spec_title: "OUCH 5.0 Order Entry Specification"
+source_pdf: "../source/ouch_5_0.pdf"
+source_section: "2.5"
+catalog_style: "vendor"
+
+message:
+  name: "Mass Cancel Request"
+  type_code: "C"
+  direction: "client_to_exchange"
+  summary: "Request cancellation of one or more booked orders matching the specified criteria."
+
+  fields:
+    - name: "Type"
+      offset: 0
+      length: 1
+      wire_type: "alpha"
+      fixed_value: "C"
+
+    - name: "User Reference Number"
+      offset: 1
+      length: 4
+      wire_type: "user_ref_num"
+      notes:
+        - "Must be day-unique and strictly increasing for each Order Port."
+
+    - name: "Firm"
+      offset: 5
+      length: 4
+      wire_type: "alpha"
+      notes:
+        - "All caps firm identifier for the order entry firm."
+        - "One logical OUCH account can potentially enter orders for multiple firms in a Service Bureau configuration."
+
+    - name: "Symbol"
+      offset: 9
+      length: 8
+      wire_type: "alpha"
+      required: false
+      notes:
+        - "Optional."
+        - "Space filled if not specified."
+        - "Symbol to mass cancel orders on."
+
+    - name: "Appendage Length"
+      offset: 17
+      length: 2
+      wire_type: "integer"
+      notes:
+        - "Length of entire optional appendage."
+        - "Zero (0) if no appendage follows."
+
+    - name: "Optional Appendage"
+      offset: 19
+      length: "var"
+      wire_type: "tag_value"
+      required: false
+      appendage_options:
+        - "Side"
+        - "Group ID"
+        - "UserRefIdx"
+      notes:
+        - "If no optional criteria are specified, all orders for the specified firm on the account will be canceled."
+        - "For Group ID: if the value is set to 0, all orders without a Group ID will be canceled."
+        - "If Group ID is not specified, all orders are eligible regardless of whether they have a Group ID."
