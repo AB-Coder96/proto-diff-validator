@@ -1,12 +1,8 @@
 protocol: "nyse-pillar-options-gateway-binary"
-market_scope:
-  - "NYSE Arca Options"
-  - "NYSE American Options"
-options_spec_version: "3.26"
+spec_version: "3.26"
 protocol_version: "1.1"
 spec_title: "NYSE Pillar Options Gateway Binary Protocol Specification"
 source_pdf: "../source/NYSE_Pillar_Options_Gateway_Binary_Protocol_Specification.pdf"
-
 catalog_style: "vendor"
 catalog_basis: "application_layer_payload_sections"
 notes:
