@@ -1,0 +1,152 @@
+protocol: "nasdaq-ouch"
+version: "5.0"
+spec_title: "OUCH 5.0 Order Entry Specification"
+source_pdf: "../source/ouch_5_0.pdf"
+source_section: "3.2"
+catalog_style: "vendor"
+
+message:
+  name: "Order Accepted"
+  type_code: "A"
+  direction: "exchange_to_client"
+  summary: "Acknowledges receipt and acceptance of a valid Enter Order Message."
+
+  fields:
+    - name: "Type"
+      offset: 0
+      length: 1
+      wire_type: "alpha"
+      fixed_value: "A"
+
+    - name: "Timestamp"
+      offset: 1
+      length: 8
+      wire_type: "timestamp"
+      notes:
+        - "Nanoseconds since midnight."
+
+    - name: "UserRefNum"
+      offset: 9
+      length: 4
+      wire_type: "user_ref_num"
+
+    - name: "Side"
+      offset: 13
+      length: 1
+      wire_type: "alpha"
+
+    - name: "Quantity"
+      offset: 14
+      length: 4
+      wire_type: "integer"
+      notes:
+        - "Total number of shares accepted."
+
+    - name: "Symbol"
+      offset: 18
+      length: 8
+      wire_type: "alpha"
+
+    - name: "Price"
+      offset: 26
+      length: 8
+      wire_type: "price"
+      notes:
+        - "Accepted price; may differ from entered price if re-priced on entry."
+
+    - name: "Time In Force"
+      offset: 34
+      length: 1
+      wire_type: "alpha"
+      notes:
+        - "Accepted time in force; may differ from entered time in force."
+
+    - name: "Display"
+      offset: 35
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "Y"
+          meaning: "visible"
+        - value: "N"
+          meaning: "hidden"
+        - value: "A"
+          meaning: "attributable"
+        - value: "Z"
+          meaning: "conformant"
+
+    - name: "Order Reference Number"
+      offset: 36
+      length: 8
+      wire_type: "integer"
+      notes:
+        - "Day-unique order reference number assigned by NASDAQ."
+
+    - name: "Capacity"
+      offset: 44
+      length: 1
+      wire_type: "alpha"
+
+    - name: "InterMarket Sweep Eligibility"
+      offset: 45
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "Y"
+          meaning: "eligible"
+        - value: "N"
+          meaning: "not eligible"
+
+    - name: "CrossType"
+      offset: 46
+      length: 1
+      wire_type: "alpha"
+
+    - name: "Order State"
+      offset: 47
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "L"
+          meaning: "Order Live"
+        - value: "D"
+          meaning: "Order Dead"
+
+    - name: "ClOrdID"
+      offset: 48
+      length: 14
+      wire_type: "alpha"
+
+    - name: "Appendage Length"
+      offset: 62
+      length: 2
+      wire_type: "integer"
+
+    - name: "Optional Appendage"
+      offset: 64
+      length: "var"
+      wire_type: "tag_value"
+      appendage_options:
+        - "Firm"
+        - "MinQty"
+        - "CustomerType"
+        - "MaxFloor"
+        - "PriceType"
+        - "PegOffset"
+        - "DiscretionPrice"
+        - "DiscretionPriceType"
+        - "DiscretionPegOffset"
+        - "PostOnly"
+        - "RandomReserves"
+        - "Route"
+        - "ExpireTime"
+        - "TradeNow"
+        - "HandleInst"
+        - "BBO Weight Indicator"
+        - "GroupID"
+        - "SharesLocated"
+        - "UserRefIdx"
+
+  behavior_notes:
+    - "Accepted messages normally come before Executed or Canceled messages."
+    - "If Order State is D, no additional messages will be received for that order."

@@ -1,0 +1,53 @@
+protocol: "nasdaq-ouch"
+version: "5.0"
+spec_title: "OUCH 5.0 Order Entry Specification"
+source_pdf: "../source/ouch_5_0.pdf"
+source_section: "2.6"
+catalog_style: "vendor"
+
+message:
+  name: "Disable Order Entry Request"
+  type_code: "D"
+  direction: "client_to_exchange"
+  summary: "Blocks submission of new orders on a particular account."
+
+  fields:
+    - name: "Type"
+      offset: 0
+      length: 1
+      wire_type: "alpha"
+      fixed_value: "D"
+      notes:
+        - "Identifies this message as a Disable Order Entry Request message type."
+
+    - name: "User Reference Number"
+      offset: 1
+      length: 4
+      wire_type: "user_ref_num"
+      notes:
+        - "UserRefNum as described in the Data Types section."
+        - "Must be day-unique and strictly increasing for each Order Port."
+
+    - name: "Firm"
+      offset: 5
+      length: 4
+      wire_type: "alpha"
+      notes:
+        - "All caps firm identifier for the order entry firm."
+        - "One logical OUCH account can potentially enter orders for multiple firms in a Service Bureau configuration."
+
+    - name: "Appendage Length"
+      offset: 9
+      length: 2
+      wire_type: "integer"
+      notes:
+        - "Length of the remaining Optional Appendage field."
+
+    - name: "Optional Appendage"
+      offset: 11
+      length: "var"
+      wire_type: "tag_value"
+      appendage_options:
+        - "UserRefIdx"
+      notes:
+        - "See the optional fields appendix for appendage details."

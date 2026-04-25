@@ -1,0 +1,44 @@
+protocol: "nasdaq-ouch"
+version: "5.0"
+spec_title: "OUCH 5.0 Order Entry Specification"
+source_pdf: "../source/ouch_5_0.pdf"
+source_section: "3.1"
+catalog_style: "vendor"
+
+message:
+  name: "System Event"
+  type_code: "S"
+  direction: "exchange_to_client"
+  summary: "Signals an event that affects the entire NASDAQ system."
+
+  fields:
+    - name: "Type"
+      offset: 0
+      length: 1
+      wire_type: "alpha"
+      fixed_value: "S"
+      notes:
+        - "System Event Message."
+
+    - name: "Timestamp"
+      offset: 1
+      length: 8
+      wire_type: "timestamp"
+      notes:
+        - "Expressed as nanoseconds since midnight."
+
+    - name: "Event Code"
+      offset: 9
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "S"
+          meaning: "Start Of Day"
+        - value: "E"
+          meaning: "End Of Day"
+      notes:
+        - "Start Of Day means the exchange is open and ready to accept orders."
+        - "End Of Day means the exchange is closed and will no longer accept new orders."
+
+  behavior_notes:
+    - "After End Of Day, breaks and cancels may still be received."

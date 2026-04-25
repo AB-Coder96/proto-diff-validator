@@ -1,0 +1,45 @@
+protocol: "nasdaq-ouch"
+version: "4.2"
+spec_title: "O*U*C*H Version 4.2"
+source_pdf: "../source/ouch_4_2.pdf"
+source_section: "3.1"
+catalog_style: "vendor"
+
+message:
+  name: "System Event Message"
+  type_code: "S"
+  direction: "exchange_to_client"
+  summary: "Signals an event that affects the entire NASDAQ system."
+
+  fields:
+    - name: "Message Type"
+      offset: 0
+      length: 1
+      wire_type: "alpha"
+      fixed_value: "S"
+      notes:
+        - "System Event Message identifier."
+
+    - name: "Timestamp"
+      offset: 1
+      length: 8
+      wire_type: "integer"
+      notes:
+        - "Reflected as the number of nanoseconds past midnight."
+
+    - name: "Event Code"
+      offset: 9
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "S"
+          meaning: "Start of Day"
+        - value: "E"
+          meaning: "End of Day"
+      notes:
+        - "See system event codes in the vendor specification."
+
+  behavior_notes:
+    - "S = Start of Day, indicating that NASDAQ is open and ready to start accepting orders."
+    - "E = End of Day, indicating that NASDAQ is closed and will not accept new orders or replaces in this session."
+    - "After End of Day, broken trades and canceled order messages may still be received."

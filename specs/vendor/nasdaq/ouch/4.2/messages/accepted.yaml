@@ -1,0 +1,167 @@
+protocol: "nasdaq-ouch"
+version: "4.2"
+spec_title: "O*U*C*H Version 4.2"
+source_pdf: "../source/ouch_4_2.pdf"
+source_section: "3.3"
+catalog_style: "vendor"
+
+message:
+  name: "Accepted Message"
+  type_code: "A"
+  direction: "exchange_to_client"
+  summary: "Acknowledges receipt and acceptance of a valid Enter Order Message."
+
+  fields:
+    - name: "Message Type"
+      offset: 0
+      length: 1
+      wire_type: "alpha"
+      fixed_value: "A"
+
+    - name: "Timestamp"
+      offset: 1
+      length: 8
+      wire_type: "timestamp"
+      notes:
+        - "Nanoseconds past midnight."
+
+    - name: "Order Token"
+      offset: 9
+      length: 14
+      wire_type: "token"
+
+    - name: "Buy/Sell Indicator"
+      offset: 23
+      length: 1
+      wire_type: "alpha"
+
+    - name: "Shares"
+      offset: 24
+      length: 4
+      wire_type: "integer"
+      notes:
+        - "Total number of shares accepted."
+
+    - name: "Stock"
+      offset: 28
+      length: 8
+      wire_type: "alpha"
+
+    - name: "Price"
+      offset: 36
+      length: 4
+      wire_type: "price"
+      notes:
+        - "Accepted price; may differ from entered price if re-priced on entry."
+
+    - name: "Time in Force"
+      offset: 40
+      length: 4
+      wire_type: "integer"
+      notes:
+        - "Accepted time in force; may be shorter in scope than entered."
+
+    - name: "Firm"
+      offset: 44
+      length: 4
+      wire_type: "alpha"
+
+    - name: "Display"
+      offset: 48
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "A"
+          meaning: "Attributable - Price to Display"
+        - value: "I"
+          meaning: "Imbalance-Only"
+        - value: "N"
+          meaning: "Non-Display"
+        - value: "Y"
+          meaning: "Anonymous - Price to Comply"
+        - value: "Z"
+          meaning: "Entered as displayed but changed to non-displayed"
+        - value: "M"
+          meaning: "Mid-Point Peg"
+        - value: "W"
+          meaning: "Mid-Point Peg Post Only"
+        - value: "L"
+          meaning: "Post-Only and Attributable - Price to Display"
+        - value: "O"
+          meaning: "Retail Order Type 1"
+        - value: "T"
+          meaning: "Retail Order Type 2"
+        - value: "Q"
+          meaning: "Retail Price Improvement Order"
+        - value: "m"
+          meaning: "Mid-Point Peg and Mid-Point Trade Now"
+        - value: "n"
+          meaning: "Non-Display and Mid-Point Trade Now"
+
+    - name: "Reference Number"
+      offset: 49
+      length: 8
+      wire_type: "integer"
+      notes:
+        - "Day-unique order reference number assigned by NASDAQ."
+
+    - name: "Capacity"
+      offset: 57
+      length: 1
+      wire_type: "alpha"
+
+    - name: "Intermarket Sweep Eligibility"
+      offset: 58
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "Y"
+          meaning: "eligible"
+        - value: "N"
+          meaning: "not eligible"
+        - value: "y"
+          meaning: "Trade-at Intermarket Sweep Order"
+
+    - name: "Minimum Quantity"
+      offset: 59
+      length: 4
+      wire_type: "integer"
+
+    - name: "Cross Type"
+      offset: 63
+      length: 1
+      wire_type: "alpha"
+
+    - name: "Order State"
+      offset: 64
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "L"
+          meaning: "Order Live"
+        - value: "D"
+          meaning: "Order Dead"
+
+    - name: "BBO Weight indicator"
+      offset: 65
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "0"
+          meaning: "0-0.2%"
+        - value: "1"
+          meaning: "0.2%-1%"
+        - value: "2"
+          meaning: "1%-2%"
+        - value: "3"
+          meaning: "greater than 2%"
+        - value: " "
+          meaning: "unspecified"
+        - value: "S"
+          meaning: "Sets the QBBO while joining the NBBO"
+        - value: "N"
+          meaning: "Improves the NBBO upon entry"
+
+  behavior_notes:
+    - "Accepted messages normally come before Executed or Canceled messages."
+    - "If Order State is D, no additional messages will be received for that order."
