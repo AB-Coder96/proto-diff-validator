@@ -1,0 +1,152 @@
+protocol: "nyse-pillar-gateway-binary"
+market_scope:
+  - "NYSE Equities"
+  - "NYSE Arca Equities"
+  - "NYSE American Equities"
+  - "NYSE National Equities"
+  - "NYSE Texas Equities"
+spec_version: "5.17"
+protocol_version: "1.1"
+spec_title: "NYSE Pillar Gateway Binary Protocol Specification"
+source_pdf: "../source/NYSE_Pillar_Gateway_Binary_Protocol_Specification.pdf"
+
+catalog_style: "vendor"
+catalog_basis: "application_layer_payload_sections"
+notes:
+  - "This catalog lists the application-layer payload message sections from the public spec contents."
+  - "Per-message hex codes are omitted here unless individually verified in the message body tables."
+
+messages:
+  member_firm_to_pillar:
+    - section: "8.1"
+      name: "Session Configuration Request"
+      file: "session_configuration_request.yaml"
+
+    - section: "8.2"
+      name: "Sequenced Filler Message"
+      file: "sequenced_filler_message.yaml"
+
+    - section: "8.3"
+      name: "New Order Single and Cancel/Replace Request"
+      file: "new_order_single_and_cancel_replace_request.yaml"
+
+    - section: "8.4"
+      name: "Order Cancel Request"
+      file: "order_cancel_request.yaml"
+
+    - section: "8.5"
+      name: "Order Modify Request"
+      file: "order_modify_request.yaml"
+
+    - section: "8.6"
+      name: "Bulk Cancel Request"
+      file: "bulk_cancel_request.yaml"
+
+    - section: "8.7"
+      name: "Symbol Subscription Request"
+      file: "symbol_subscription_request.yaml"
+
+    - section: "8.8"
+      name: "TG Begin"
+      file: "tg_begin.yaml"
+
+    - section: "8.9"
+      name: "TG End"
+      file: "tg_end.yaml"
+
+    - section: "8.10"
+      name: "Manual Action Response"
+      file: "manual_action_response.yaml"
+
+    - section: "8.11"
+      name: "Risk Limit Update Request"
+      file: "risk_limit_update_request.yaml"
+
+    - section: "8.12"
+      name: "Risk Action Request"
+      file: "risk_action_request.yaml"
+
+  pillar_to_member_firm:
+    - section: "9.1"
+      name: "Equities Symbol Reference Data"
+      file: "equities_symbol_reference_data.yaml"
+
+    - section: "9.2"
+      name: "DMM Symbol Reference Data"
+      file: "dmm_symbol_reference_data.yaml"
+
+    - section: "9.3"
+      name: "Minimum Price Variant Class Reference Data"
+      file: "minimum_price_variant_class_reference_data.yaml"
+
+    - section: "9.4"
+      name: "Minimum Price Variant Level Reference Data"
+      file: "minimum_price_variant_level_reference_data.yaml"
+
+    - section: "9.5"
+      name: "MPID Configuration"
+      file: "mpid_configuration.yaml"
+
+    - section: "9.6"
+      name: "MMID Configuration"
+      file: "mmid_configuration.yaml"
+
+    - section: "9.7"
+      name: "Session Configuration Acknowledgement"
+      file: "session_configuration_acknowledgement.yaml"
+
+    - section: "9.8"
+      name: "Order and Cancel/Replace Acknowledgement"
+      file: "order_and_cancel_replace_acknowledgement.yaml"
+
+    - section: "9.9"
+      name: "Order Modify/Cancel Request Acknowledgment and UROUT"
+      file: "order_modify_cancel_request_acknowledgment_and_urout.yaml"
+
+    - section: "9.10"
+      name: "Order Priority Update Acknowledgment"
+      file: "order_priority_update_acknowledgment.yaml"
+
+    - section: "9.11"
+      name: "Execution Report"
+      file: "execution_report.yaml"
+
+    - section: "9.12"
+      name: "Trade Bust/Correct"
+      file: "trade_bust_correct.yaml"
+
+    - section: "9.13"
+      name: "Application Layer Reject"
+      file: "application_layer_reject.yaml"
+
+    - section: "9.14"
+      name: "Symbol Subscription Acknowledgement"
+      file: "symbol_subscription_acknowledgement.yaml"
+
+    - section: "9.15"
+      name: "GT Begin"
+      file: "gt_begin.yaml"
+
+    - section: "9.16"
+      name: "GT End"
+      file: "gt_end.yaml"
+
+    - section: "9.17"
+      name: "Auction Price Data"
+      file: "auction_price_data.yaml"
+
+    - section: "9.18"
+      name: "Auction Request"
+      file: "auction_request.yaml"
+
+    - section: "9.19"
+      name: "Manual Action Request"
+      file: "manual_action_request.yaml"
+
+    - section: "9.20"
+      name: "Risk Control Acknowledgement"
+      file: "risk_control_acknowledgement.yaml"
+
+    - section: "9.21"
+      name: "Risk Control Alert"
+      file: "risk_control_alert.yaml"

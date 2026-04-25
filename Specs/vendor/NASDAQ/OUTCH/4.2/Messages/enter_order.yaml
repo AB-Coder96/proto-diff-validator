@@ -1,0 +1,179 @@
+protocol: "nasdaq-ouch"
+version: "4.2"
+spec_title: "O*U*C*H Version 4.2"
+source_pdf: "../source/ouch_4_2.pdf"
+source_section: "2.1"
+catalog_style: "vendor"
+
+message:
+  name: "Enter Order Message"
+  type_code: "O"
+  direction: "client_to_exchange"
+  summary: "Submit a new order to Nasdaq."
+
+  fields:
+    - name: "Type"
+      offset: 0
+      length: 1
+      wire_type: "alpha"
+      fixed_value: "O"
+
+    - name: "Order Token"
+      offset: 1
+      length: 14
+      wire_type: "token"
+      notes:
+        - "Day-unique within the logical OUCH account."
+
+    - name: "Buy/Sell Indicator"
+      offset: 15
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "B"
+          meaning: "buy"
+        - value: "S"
+          meaning: "sell"
+        - value: "T"
+          meaning: "sell short"
+        - value: "E"
+          meaning: "sell short exempt"
+
+    - name: "Shares"
+      offset: 16
+      length: 4
+      wire_type: "integer"
+      notes:
+        - "Total shares."
+        - "Must be > 0 and < 1,000,000."
+
+    - name: "Stock"
+      offset: 20
+      length: 8
+      wire_type: "alpha"
+      notes:
+        - "Stock symbol."
+
+    - name: "Price"
+      offset: 28
+      length: 4
+      wire_type: "integer"
+      notes:
+        - "Order price."
+
+    - name: "Time in Force"
+      offset: 32
+      length: 4
+      wire_type: "integer"
+      notes:
+        - "Lifetime in seconds."
+        - "Special values are defined in the spec data-types section."
+
+    - name: "Firm"
+      offset: 36
+      length: 4
+      wire_type: "alpha"
+      notes:
+        - "All caps firm identifier."
+        - "Blank-filled uses the account default firm."
+
+    - name: "Display"
+      offset: 40
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "A"
+          meaning: "Attributable - Price to Display"
+        - value: "Y"
+          meaning: "Anonymous - Price to Comply"
+        - value: "N"
+          meaning: "Non-Display"
+        - value: "P"
+          meaning: "Post-Only"
+        - value: "I"
+          meaning: "Imbalance-Only"
+        - value: "M"
+          meaning: "Mid-Point Peg"
+        - value: "W"
+          meaning: "Mid-Point Peg Post Only"
+        - value: "L"
+          meaning: "Post-Only and Attributable - Price to Display"
+        - value: "O"
+          meaning: "Retail Order Type 1"
+        - value: "T"
+          meaning: "Retail Order Type 2"
+        - value: "Q"
+          meaning: "Retail Price Improvement Order"
+        - value: "m"
+          meaning: "Mid-Point Peg and Mid-Point Trade Now"
+        - value: "n"
+          meaning: "Non-Display and Mid-Point Trade Now"
+        - value: "B"
+          meaning: "M-ELO and Continuous Book Midpoint"
+
+    - name: "Capacity"
+      offset: 41
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "A"
+          meaning: "agency"
+        - value: "P"
+          meaning: "principal"
+        - value: "R"
+          meaning: "riskless"
+      notes:
+        - "Other values are converted to O/Other by the venue."
+
+    - name: "Intermarket Sweep Eligibility"
+      offset: 42
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "Y"
+          meaning: "eligible"
+        - value: "N"
+          meaning: "not eligible"
+        - value: "y"
+          meaning: "trade-at intermarket sweep order"
+
+    - name: "Minimum Quantity"
+      offset: 43
+      length: 4
+      wire_type: "integer"
+      notes:
+        - "Minimum acceptable executable quantity."
+
+    - name: "Cross Type"
+      offset: 47
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "N"
+          meaning: "no cross"
+        - value: "O"
+          meaning: "opening cross"
+        - value: "C"
+          meaning: "closing cross"
+        - value: "H"
+          meaning: "halt/IPO cross"
+        - value: "S"
+          meaning: "supplemental order"
+        - value: "E"
+          meaning: "extended life"
+        - value: "A"
+          meaning: "extended trading close"
+
+    - name: "Customer Type"
+      offset: 48
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "R"
+          meaning: "retail designated order"
+        - value: "N"
+          meaning: "not a retail designated order"
+        - value: " "
+          meaning: "use port default"
+      notes:
+        - "Optional field in the spec text."

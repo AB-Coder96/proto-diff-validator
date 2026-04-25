@@ -1,0 +1,179 @@
+protocol: "nasdaq-ouch"
+version: "5.0"
+spec_title: "OUCH 5.0 Order Entry Specification"
+source_pdf: "../source/ouch_5_0.pdf"
+source_section: "2.1"
+catalog_style: "vendor"
+
+message:
+  name: "Enter Order"
+  type_code: "O"
+  direction: "client_to_exchange"
+  summary: "Submit a new order to Nasdaq."
+
+  fields:
+    - name: "Type"
+      offset: 0
+      length: 1
+      wire_type: "alpha"
+      fixed_value: "O"
+
+    - name: "UserRefNum"
+      offset: 1
+      length: 4
+      wire_type: "user_ref_num"
+      notes:
+        - "Day-unique and strictly increasing for each OUCH account."
+
+    - name: "Side"
+      offset: 5
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "B"
+          meaning: "buy"
+        - value: "S"
+          meaning: "sell"
+        - value: "T"
+          meaning: "sell short"
+        - value: "E"
+          meaning: "sell short exempt"
+
+    - name: "Quantity"
+      offset: 6
+      length: 4
+      wire_type: "integer"
+      notes:
+        - "Total shares."
+        - "Must be > 0 and < 1,000,000."
+
+    - name: "Symbol"
+      offset: 10
+      length: 8
+      wire_type: "alpha"
+      notes:
+        - "Stock symbol."
+
+    - name: "Price"
+      offset: 18
+      length: 8
+      wire_type: "price"
+      notes:
+        - "Order price."
+
+    - name: "Time In Force"
+      offset: 26
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "0"
+          meaning: "Day (Market Hours)"
+        - value: "3"
+          meaning: "IOC"
+        - value: "5"
+          meaning: "GTX (Extended Hours)"
+        - value: "6"
+          meaning: "GTT"
+        - value: "E"
+          meaning: "After hours"
+      notes:
+        - "GTT requires ExpireTime in the appendage."
+
+    - name: "Display"
+      offset: 27
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "Y"
+          meaning: "visible"
+        - value: "N"
+          meaning: "hidden"
+        - value: "A"
+          meaning: "attributable"
+
+    - name: "Capacity"
+      offset: 28
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "A"
+          meaning: "agency"
+        - value: "P"
+          meaning: "principal"
+        - value: "R"
+          meaning: "riskless"
+        - value: "O"
+          meaning: "other"
+
+    - name: "InterMarket Sweep Eligibility"
+      offset: 29
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "Y"
+          meaning: "eligible"
+        - value: "N"
+          meaning: "not eligible"
+
+    - name: "CrossType"
+      offset: 30
+      length: 1
+      wire_type: "alpha"
+      enum_values:
+        - value: "N"
+          meaning: "continuous market"
+        - value: "O"
+          meaning: "opening cross"
+        - value: "C"
+          meaning: "closing cross"
+        - value: "H"
+          meaning: "halt/IPO"
+        - value: "S"
+          meaning: "supplemental"
+        - value: "R"
+          meaning: "retail (BX only)"
+        - value: "E"
+          meaning: "extended life"
+        - value: "A"
+          meaning: "after hours close"
+      notes:
+        - "The spec labels several values as Nasdaq-only."
+
+    - name: "ClOrdID"
+      offset: 31
+      length: 14
+      wire_type: "alpha"
+      notes:
+        - "Customer order identifier."
+        - "Not checked for day uniqueness per OUCH account."
+
+    - name: "Appendage Length"
+      offset: 45
+      length: 2
+      wire_type: "integer"
+      notes:
+        - "Length of the remaining Optional Appendage field."
+
+    - name: "Optional Appendage"
+      offset: 47
+      length: "var"
+      wire_type: "tag_value"
+      appendage_options:
+        - "Firm"
+        - "MinQty"
+        - "CustomerType"
+        - "MaxFloor"
+        - "PriceType"
+        - "PegOffset"
+        - "DiscretionPrice"
+        - "DiscretionPriceType"
+        - "DiscretionPegOffset"
+        - "PostOnly"
+        - "RandomReserves"
+        - "ExpireTime"
+        - "TradeNow"
+        - "HandleInst"
+        - "GroupID"
+        - "SharesLocated"
+        - "LocateBroker"
+        - "UserRefIdx"

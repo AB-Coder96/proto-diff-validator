@@ -1,0 +1,172 @@
+protocol: "nyse-pillar-options-gateway-binary"
+market_scope:
+  - "NYSE Arca Options"
+  - "NYSE American Options"
+options_spec_version: "3.26"
+protocol_version: "1.1"
+spec_title: "NYSE Pillar Options Gateway Binary Protocol Specification"
+source_pdf: "../source/NYSE_Pillar_Options_Gateway_Binary_Protocol_Specification.pdf"
+
+catalog_style: "vendor"
+catalog_basis: "application_layer_payload_sections"
+notes:
+  - "This catalog lists the application-layer payload message sections from the public spec contents."
+  - "Per-message hex codes are omitted here unless individually verified in the message body tables."
+  - "Where the contents page distinguishes variants such as 0x0223 vs 0x0224 or 0x0294 vs 0x0259, those are preserved as separate entries."
+
+messages:
+  member_firm_to_pillar:
+    - section: "7.1"
+      name: "Session Configuration Request"
+      file: "session_configuration_request.yaml"
+
+    - section: "7.2"
+      name: "Sequenced Filler Message"
+      file: "sequenced_filler_message.yaml"
+
+    - section: "7.3"
+      name: "New Order Single/Complex and Cancel/Replace Request"
+      file: "new_order_single_complex_and_cancel_replace_request.yaml"
+
+    - section: "7.4"
+      name: "Order Cancel Request"
+      file: "order_cancel_request.yaml"
+
+    - section: "7.5"
+      name: "Order Modify Request"
+      file: "order_modify_request.yaml"
+
+    - section: "7.6"
+      name: "New Bulk Quote"
+      file: "new_bulk_quote.yaml"
+
+    - section: "7.7"
+      name: "New Order Cross"
+      file: "new_order_cross.yaml"
+
+    - section: "7.8"
+      name: "Bulk Cancel Request"
+      file: "bulk_cancel_request.yaml"
+
+    - section: "7.8"
+      name: "Bulk Cancel Request - 0x0223"
+      message_type_hex: "0x0223"
+      file: "bulk_cancel_request_0x0223.yaml"
+
+    - section: "7.8"
+      name: "Bulk Cancel Request - 0x0224"
+      message_type_hex: "0x0224"
+      file: "bulk_cancel_request_0x0224.yaml"
+
+    - section: "7.9"
+      name: "Risk Limit Update Request"
+      file: "risk_limit_update_request.yaml"
+
+    - section: "7.10"
+      name: "Risk Action Request"
+      file: "risk_action_request.yaml"
+
+    - section: "7.11"
+      name: "New Complex Series Request"
+      file: "new_complex_series_request.yaml"
+
+  pillar_to_member_firm:
+    - section: "8.1"
+      name: "Underlying Symbol Reference Data"
+      file: "underlying_symbol_reference_data.yaml"
+
+    - section: "8.2"
+      name: "Series Reference Data"
+      file: "series_reference_data.yaml"
+
+    - section: "8.3"
+      name: "Complex Series Reference Data"
+      file: "complex_series_reference_data.yaml"
+
+    - section: "8.4"
+      name: "Minimum Price Variant Class Reference Data"
+      file: "minimum_price_variant_class_reference_data.yaml"
+
+    - section: "8.5"
+      name: "Minimum Price Variant Level Reference Data"
+      file: "minimum_price_variant_level_reference_data.yaml"
+
+    - section: "8.6"
+      name: "MPID Configuration"
+      file: "mpid_configuration.yaml"
+
+    - section: "8.7"
+      name: "MMID Configuration"
+      file: "mmid_configuration.yaml"
+
+    - section: "8.8"
+      name: "Options Market Maker Symbol Appointment Reference Data"
+      file: "options_market_maker_symbol_appointment_reference_data.yaml"
+
+    - section: "8.9"
+      name: "Session Configuration Acknowledgement"
+      file: "session_configuration_acknowledgement.yaml"
+
+    - section: "8.10"
+      name: "Order and Cancel/Replace Acknowledgement"
+      file: "order_and_cancel_replace_acknowledgement.yaml"
+
+    - section: "8.11"
+      name: "Bulk Quote Acknowledgment"
+      file: "bulk_quote_acknowledgment.yaml"
+
+    - section: "8.11"
+      name: "Bulk Quote Acknowledgment - 0x0294"
+      message_type_hex: "0x0294"
+      file: "bulk_quote_acknowledgment_0x0294.yaml"
+
+    - section: "8.11"
+      name: "Bulk Quote Acknowledgment - 0x0259"
+      message_type_hex: "0x0259"
+      file: "bulk_quote_acknowledgment_0x0259.yaml"
+
+    - section: "8.12"
+      name: "QuoteAck Repeating Group"
+      file: "quoteack_repeating_group.yaml"
+
+    - section: "8.12"
+      name: "QuoteAck - 0x0294"
+      message_type_hex: "0x0294"
+      file: "quoteack_0x0294.yaml"
+
+    - section: "8.12"
+      name: "QuoteAck - 0x0308"
+      message_type_hex: "0x0308"
+      file: "quoteack_0x0308.yaml"
+
+    - section: "8.13"
+      name: "Order Single/Complex Modify/Cancel Request Acknowledgment and UROUT"
+      file: "order_single_complex_modify_cancel_request_acknowledgment_and_urout.yaml"
+
+    - section: "8.14"
+      name: "Order Priority Update Acknowledgment"
+      file: "order_priority_update_acknowledgment.yaml"
+
+    - section: "8.15"
+      name: "Execution Report"
+      file: "execution_report.yaml"
+
+    - section: "8.16"
+      name: "Trade Bust/Correct"
+      file: "trade_bust_correct.yaml"
+
+    - section: "8.17"
+      name: "Application Layer Reject"
+      file: "application_layer_reject.yaml"
+
+    - section: "8.18"
+      name: "Risk Control Acknowledgement"
+      file: "risk_control_acknowledgement.yaml"
+
+    - section: "8.19"
+      name: "Risk Control Alert"
+      file: "risk_control_alert.yaml"
+
+    - section: "8.20"
+      name: "Complex Series Request Acknowledgement"
+      file: "complex_series_request_acknowledgement.yaml"
