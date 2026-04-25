@@ -1,0 +1,8 @@
+build-essential
+cmake
+gdb
+git
+ninja-build
+pkg-config
+libyaml-cpp-dev
+libgtest-dev
