@@ -1,4 +1,4 @@
 git add .
-git commit -m "added vendor schema loader, parser tests, and initial structural diff engine"
+git commit -m "Reg push linux"
 git push origin main
 read -p "Press [Enter] to continue..."
