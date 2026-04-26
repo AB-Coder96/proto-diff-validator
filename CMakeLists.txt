@@ -28,6 +28,8 @@ find_package(yaml-cpp REQUIRED)
 
 add_library(vendor_schema
     src/vendor_schema_loader.cpp
+    src/diff.cpp
+
 )
 
 target_include_directories(vendor_schema
@@ -67,4 +69,21 @@ if(BUILD_TESTS)
     )
 
     gtest_discover_tests(vendor_schema_loader_test)
+    add_executable(diff_test
+    tests/diff_test.cpp
+    )
+
+    target_link_libraries(diff_test
+        PRIVATE
+            vendor_schema
+            GTest::gtest_main
+    )
+
+    target_compile_features(diff_test
+        PRIVATE
+            cxx_std_20
+    )
+
+    gtest_discover_tests(diff_test)
 endif()
+
