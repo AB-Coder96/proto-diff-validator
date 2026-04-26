@@ -29,6 +29,7 @@ find_package(yaml-cpp REQUIRED)
 add_library(vendor_schema
     src/vendor_schema_loader.cpp
     src/diff.cpp
+    src/report.cpp
 
 )
 
@@ -85,5 +86,21 @@ if(BUILD_TESTS)
     )
 
     gtest_discover_tests(diff_test)
+    add_executable(report_test
+    tests/report_test.cpp
+    )
+
+    target_link_libraries(report_test
+        PRIVATE
+            vendor_schema
+            GTest::gtest_main
+    )
+
+    target_compile_features(report_test
+        PRIVATE
+            cxx_std_20
+    )
+
+    gtest_discover_tests(report_test)
 endif()
 
